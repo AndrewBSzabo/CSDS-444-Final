@@ -25,17 +25,3 @@ def index():
 
             return decrypt(to_dec, key)
     return render_template("enc1/index.html")
-
-
-# @bp.route("/<int:id>/buy", methods=("GET",))
-# @login_required
-# def buy(id):
-#     """Processes payment for swipe"""
-#     pass
-#
-#
-# @bp.route("/<int:id>/get_paid", methods=("GET", "POST"))
-# @login_required
-# def sell(id):
-#     """Allows sellers to claim payment for a confirmed + completed transaction"""
-#     pass
