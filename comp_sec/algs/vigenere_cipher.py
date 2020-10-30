@@ -11,8 +11,11 @@ def encrypt(message, key):
     
     # for each message character and long key character pair...
     for m, k in zip(message, long_key):
-        # append the character that corresponds to the message character row and key character column
-        encrypted_message += chr((((ord(m) - alphabet_start) + (ord(k) - alphabet_start)) % alphabet_size) + alphabet_start)
+        if ord(m) in range(alphabet_start,alphabet_end + 1):
+            # append the character that corresponds to the message character row and key character column
+            encrypted_message += chr((((ord(m) - alphabet_start) + (ord(k) - alphabet_start)) % alphabet_size) + alphabet_start)
+        else:
+            return f'{m}, in the message, is not in the range of supported characters (ascii characters 32-126)'
 
     return encrypted_message
 
@@ -24,8 +27,10 @@ def decrypt(cipher, key):
 
     # for each cipher character and long key character pair...
     for c, k in zip(cipher, long_key):
-
-        decrypted_message += chr(((ord(c) - ord(k)) % alphabet_size) + alphabet_start)
+        if ord(c) in range(alphabet_start, alphabet_end + 1):
+            decrypted_message += chr(((ord(c) - ord(k)) % alphabet_size) + alphabet_start)
+        else:
+            return f'{c}, in the cipher text, is not in the range of supported characters (ascii characters 32-126)'
     
     return decrypted_message
 
@@ -34,12 +39,15 @@ def key_repeated(message, key):
     repeated_key = ""
 
     for i in range(len(message)):
-        repeated_key += key[i % len(key)]
+        if ord(key[i % len(key)]) in range(alphabet_start,alphabet_end + 1):
+            repeated_key += key[i % len(key)]
+        else:
+            return f'{key[i % len(key)]}, in key, is not in the range of supported characters (ascii characters 32-126)'
 
     return repeated_key
 
 if __name__ == "__main__":
-    message = "test message!"
+    message = "test message!~"
     
     # for i in range(alphabet_size):
     #      message += chr(i)
