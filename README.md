@@ -1,8 +1,11 @@
 # CSDS-444-Final
 
-Vigenere Cipher
-DES
-RSA
+Caeser Cipher,
+Vigenere Cipher,
+DES,
+RSA,
+MD 5 checksum
+
 
 To run application:
 1. cd into CSDS-444-Final/
