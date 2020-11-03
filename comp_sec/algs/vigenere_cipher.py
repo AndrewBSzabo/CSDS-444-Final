@@ -37,7 +37,6 @@ def decrypt(cipher, key):
 # returns a string of repeated keys that is as long as the message
 def key_repeated(message, key):
     repeated_key = ""
-
     for i in range(len(message)):
         if ord(key[i % len(key)]) in range(alphabet_start,alphabet_end + 1):
             repeated_key += key[i % len(key)]

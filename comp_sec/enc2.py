@@ -8,6 +8,7 @@ from flask import url_for
 
 bp = Blueprint("enc2", __name__, url_prefix="/enc2")
 
+# des
 
 @bp.route("/")
 def index():

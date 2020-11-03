@@ -1,0 +1,29 @@
+<!doctype html>
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='enc_runner.js') }}"></script>
+</head>
+<body>
+<h1>{% block name %}{% endblock %}</h1>
+<form id="message_form">
+<table>
+    <tr>
+        <th>Alice</th>
+        <th>Public</th>
+        <th>Bob</th>
+    </tr>
+    <tr>
+        <td><p>Message</p><input type="text" name="alice_message"></td>
+        <td><p>Key</p><input type="text" name="key"></td>
+        <td><p>Message</p><input type="text" name="bob_message"></td>
+    </tr>
+    <tr>
+        <td><input type="submit" name="alice_submit" value="send" id="alice_submit"></td>
+        <td></td>
+        <td><input type="submit" name="bob_submit" value="send" id="bob_submit"></td>
+    </tr>
+</table>
+</form>
+<input type="hidden" id="to_submit" value="{% block submit %}{% endblock %}">
+</body>
