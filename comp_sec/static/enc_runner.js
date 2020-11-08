@@ -9,14 +9,10 @@ $(document).ready(function() {
           data: {"submitter": submitter, "form_data": form_data},
           dataType: "json",
           success: function(resultData) {
-            // resultData.alice, resultData.bob
-            // ^ needs to be added to table
-//            if (resultData.hasOwnProperty("error")) {
-//              alert("Failed to get action. Error: " + resultData.error);
-//            } else if (resultData.hasOwnProperty("no_result")) {
-//            } else {
-//              alert(resultData)
-//            }
+            resultData.alice.forEach((alice_message, index) => {
+                $('#message_table').append('<tr><td>' + alice_message + '</td><td>' + resultData.public[index] + '</td><td>' + resultData.bob[index] + '</td></tr>');
+            })
+            $('#message_table').append('<tr><td>----------</td><td>----------</td><td>----------</td></tr>');
           },
           error: function(e) { alert("Failed to get action.") }
         });
@@ -31,6 +27,8 @@ $(document).ready(function() {
     });
 
     $("#bob_submit").click(function() {
+        console.log($("#message_form"))
+        console.log("hi")
         enc_message(1, $("#message_form").serialize());
     });
 

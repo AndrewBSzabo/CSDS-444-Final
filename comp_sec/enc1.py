@@ -6,6 +6,7 @@ from flask import render_template
 from flask import request
 from flask import url_for
 import re
+from urllib.parse import unquote_plus
 
 from comp_sec.algs.vigenere_cipher import encrypt, decrypt
 
@@ -38,15 +39,18 @@ def encrypter():
     submitter = request.form['submitter']
     form_data = request.form['form_data']
 
-    alice_message = re.findall(r'alice_message=(.*?)&|$', form_data)[0]
-    bob_message = re.findall(r'bob_message=(.*?)&|$', form_data)[0]
-    key = re.findall(r'key=(.*?)&|$', form_data)[0]
+    alice_message = unquote_plus(re.findall(r'alice_message=(.*?)&|$', form_data)[0])
+    bob_message = unquote_plus(re.findall(r'bob_message=(.*?)$', form_data)[0])
+    key = unquote_plus(re.findall(r'key=(.*?)&|$', form_data)[0])
+
+    encrypted_bob = encrypt(bob_message,key)
+    encrypted_alice = encrypt(alice_message,key)
 
     # alice submit
     if submitter == '0':
-        return {'alice': alice_message, 'public': key, 'bob': "ENCRYPTED:" + alice_message}
+        return {'alice': ["SENDING: " + alice_message, "ENCRYPT: " + encrypted_alice,"SENT---------->", ' '], 'public': ["KEY: " + key,' ',"PUBLIC: " + encrypted_alice, ' '], 'bob': [' ',' ',"RECIEVED: " + encrypted_alice, "DECRYPT: " + decrypt(encrypted_alice, key)]}
     # bob submit
     elif submitter == '1':
-        return {'alice': "ENCRYPTED:" + bob_message, 'public': '', 'bob': bob_message}
+        return {'alice': [' ',' ',"RECIEVED: " + encrypted_bob, "DECRYPT: " + decrypt(encrypted_bob, key)], 'public': ["KEY: " + key,' ',"PUBLIC: " + encrypted_bob, ' '], 'bob': ["SENDING: " + bob_message, "ENCRYPT: " + encrypted_bob,"<-------------SENT", ' ']}
     return "ERROR"
 

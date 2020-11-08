@@ -26,6 +26,11 @@ export FLASK_APP=comp_sec
 
 export FLASK_ENV=development
 
+
+For Windows:
+set FLASK_APP=comp_sec
+set FLASK_ENV=development
+
 flask run
 
 5. Go to http://127.0.0.1:5000/ in browser
