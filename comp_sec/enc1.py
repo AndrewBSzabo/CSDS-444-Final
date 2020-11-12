@@ -5,8 +5,7 @@ from flask import g
 from flask import render_template
 from flask import request
 from flask import url_for
-import re
-from urllib.parse import unquote_plus
+from urllib.parse import parse_qs
 
 from comp_sec.algs.vigenere_cipher import encrypt, decrypt
 
@@ -39,9 +38,11 @@ def encrypter():
     submitter = request.form['submitter']
     form_data = request.form['form_data']
 
-    alice_message = unquote_plus(re.findall(r'alice_message=(.*?)&|$', form_data)[0])
-    bob_message = unquote_plus(re.findall(r'bob_message=(.*?)$', form_data)[0])
-    key = unquote_plus(re.findall(r'key=(.*?)&|$', form_data)[0])
+    parsed_form_data = parse_qs(form_data)
+
+    alice_message = parsed_form_data['alice_message'][0]
+    bob_message = parsed_form_data['bob_message'][0]
+    key = parsed_form_data['key'][0]
 
     encrypted_bob = encrypt(bob_message,key)
     encrypted_alice = encrypt(alice_message,key)
