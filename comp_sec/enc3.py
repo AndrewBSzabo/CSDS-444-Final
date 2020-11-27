@@ -7,7 +7,7 @@ from flask import request
 from flask import url_for
 from urllib.parse import parse_qs
 
-from comp_sec.algs.rsa import encrypt, decrypt
+from comp_sec.algs.rsa import encrypt, decrypt, getConsts
 
 bp = Blueprint("enc3", __name__, url_prefix="/enc3")
 
@@ -19,30 +19,28 @@ def index():
 
 @bp.route("/encrypter", methods=("GET", "POST"))
 def encrypter():
-    submitter = request.form['submitter']
-    form_data = request.form['form_data']
+    submitter = request.form["submitter"]
+    form_data = request.form["form_data"]
 
     parsed_form_data = parse_qs(form_data)
 
-    if 'key' in parsed_form_data:
-        key = parsed_form_data['key'][0]
-    else:
-        return "Public Key is a required field."
+    p, q, n, nt, e, d = getConsts()
+    p, q, n, nt, e, d = str(p), str(q), str(n), str(nt), str(e), str(d)
 
     # alice submit
-    if submitter == '0':
-        if 'alice_message' in parsed_form_data:
-            alice_message = parsed_form_data['alice_message'][0]
-            encrypted_alice = encrypt(alice_message,key)
-            return {'alice': ["SENDING: " + alice_message, "ENCRYPT: " + encrypted_alice, "SENT---------->", ' '], 'public': ["KEY: " + key, ' ', "PUBLIC: " + encrypted_alice, ' '], 'bob': [' ', ' ', "RECIEVED: " + encrypted_alice, "DECRYPT: " + decrypt(encrypted_alice, key)]}
+    if submitter == "0":
+        if "alice_message" in parsed_form_data:
+            alice_message = parsed_form_data["alice_message"][0]
+            encrypted_alice = encrypt(alice_message)
+            return {"alice": [" ", " ", " ", " ", " ", " ", " ", "SENDING: " + alice_message, "ENCRYPT: " + encrypted_alice, "SENT---------->", " "], "public": ["p = " + p, "q = " + q, "e = " + e, " ", "CALCULATIONS:", "n = p * n = " + n, "totient_n = " + nt, " ", " ", "PUBLIC: " + encrypted_alice, " "], "bob": [" ", " ", " ", " ", "CALCULATIONS:", "b = " + d + ", (from: 1 = e * d mod totient_n)", " ", " ", " ", "RECIEVED: " + encrypted_alice, "DECRYPT: " + decrypt(encrypted_alice)]}
         else:
             return "Can not send from Alice with an empty Alice Message field."
     # bob submit
-    elif submitter == '1':
-        if 'bob_message' in parsed_form_data:
-            bob_message = parsed_form_data['bob_message'][0]
-            encrypted_bob = encrypt(bob_message,key)
-            return {'alice': [' ', ' ', "RECIEVED: " + encrypted_bob, "DECRYPT: " + decrypt(encrypted_bob, key)], 'public': ["KEY: " + key, ' ', "PUBLIC: " + encrypted_bob, ' '], 'bob': ["SENDING: " + bob_message, "ENCRYPT: " + encrypted_bob, "<-------------SENT", ' ']}
+    elif submitter == "1":
+        if "bob_message" in parsed_form_data:
+            bob_message = parsed_form_data["bob_message"][0]
+            encrypted_bob = encrypt(bob_message)
+            return {"alice": [" ", " ", " ", " ", "CALCULATIONS:", "b = " + d + ", (from: 1 = e * d mod totient_n)", " ", " ", " ", "RECIEVED: " + encrypted_bob, "DECRYPT: " + decrypt(encrypted_bob)], "public": ["p = " + p, "q = " + q, "e = " + e, " ", "CALCULATIONS:", "n = p * n = " + n, "totient_n = " + nt, " ", " ", "PUBLIC: " + encrypted_bob, " "], "bob": [" ", " ", " ", " ", " ", " ", " ", "SENDING: " + bob_message, "ENCRYPT: " + encrypted_bob, "<-------------SENT", " "]}
         else:
             return "Can not send from Bob with an empty Bob Message field."
     return "ERROR"

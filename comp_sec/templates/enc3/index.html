@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
 
 {% block name %}RSA{% endblock %}
-{% block public %}<p>Keys</p><input type="integer" name="p" />{% endblock %}
+{% block public %}<br />{% endblock %}
 {% block submit %}{{ url_for('enc3.encrypter') }}{% endblock %}

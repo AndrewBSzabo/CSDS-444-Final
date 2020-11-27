@@ -5,6 +5,9 @@ nt = 130520
 e = 3
 d = 43507
 
+def getConsts():
+    return p, q, n, nt, e, d
+
 def encrypt(message):
     encrypted_message = ""
     
