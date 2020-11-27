@@ -1,15 +1,5 @@
-<h1>The first algorithm: Vigenere cipher</h1>
+{% extends 'base.html' %}
 
-<form method="POST">
-    <p>Insert text to encrypt</p>
-    To enc: <input type="text" name="to_enc">
-    Key: <input type="text" name="key">
-    <input name='enc' type="submit">
-</form>
-
-<form method="POST">
-    <p>Insert text to decrypt</p>
-    To dec: <input type="text" name="to_dec">
-    Key: <input type="text" name="key">
-    <input name='dec' type="submit">
-</form>
+{% block name %}Vigenere Cipher{% endblock %}
+{% block public %}<p>Key</p><input type="text" name="key" />{% endblock %}
+{% block submit %}{{ url_for('enc1.encrypter') }}{% endblock %}

@@ -1,10 +1,10 @@
 # CSDS-444-Final
 
-Caeser Cipher,
-Vigenere Cipher,
-DES,
-RSA,
-MD 5 checksum
+Caeser Cipher (enc0),
+Vigenere Cipher (enc1),
+DES (enc2),
+RSA (enc3),
+MD 5 checksum (enc4)
 
 
 To run application:

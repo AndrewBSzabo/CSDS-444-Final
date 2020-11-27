@@ -14,24 +14,7 @@ bp = Blueprint("enc1", __name__, url_prefix="/enc1")
 
 @bp.route("/", methods=("GET", "POST"))
 def index():
-    if request.method == "POST":
-        if 'enc' in request.form:
-            to_enc = request.form["to_enc"]
-            key = request.form["key"]
-
-            return encrypt(to_enc, key)
-        if 'dec' in request.form:
-            to_dec = request.form["to_dec"]
-            key = request.form["key"]
-
-            return decrypt(to_dec, key)
     return render_template("enc1/index.html")
-
-
-@bp.route("/new_lander", methods=("GET", "POST"))
-def new_lander():
-    return render_template("enc1/new_lander.html")
-
 
 @bp.route("/encrypter", methods=("GET", "POST"))
 def encrypter():
@@ -40,18 +23,26 @@ def encrypter():
 
     parsed_form_data = parse_qs(form_data)
 
-    alice_message = parsed_form_data['alice_message'][0]
-    bob_message = parsed_form_data['bob_message'][0]
-    key = parsed_form_data['key'][0]
-
-    encrypted_bob = encrypt(bob_message,key)
-    encrypted_alice = encrypt(alice_message,key)
+    if 'key' in parsed_form_data:
+        key = parsed_form_data['key'][0]
+    else:
+        return "Public Key is a required field."
 
     # alice submit
     if submitter == '0':
-        return {'alice': ["SENDING: " + alice_message, "ENCRYPT: " + encrypted_alice,"SENT---------->", ' '], 'public': ["KEY: " + key,' ',"PUBLIC: " + encrypted_alice, ' '], 'bob': [' ',' ',"RECIEVED: " + encrypted_alice, "DECRYPT: " + decrypt(encrypted_alice, key)]}
+        if 'alice_message' in parsed_form_data:
+            alice_message = parsed_form_data['alice_message'][0]
+            encrypted_alice = encrypt(alice_message,key)
+            return {'alice': ["SENDING: " + alice_message, "ENCRYPT: " + encrypted_alice, "SENT---------->", ' '], 'public': ["KEY: " + key, ' ', "PUBLIC: " + encrypted_alice, ' '], 'bob': [' ', ' ', "RECIEVED: " + encrypted_alice, "DECRYPT: " + decrypt(encrypted_alice, key)]}
+        else:
+            return "Can not send from Alice with an empty Alice Message field."
     # bob submit
     elif submitter == '1':
-        return {'alice': [' ',' ',"RECIEVED: " + encrypted_bob, "DECRYPT: " + decrypt(encrypted_bob, key)], 'public': ["KEY: " + key,' ',"PUBLIC: " + encrypted_bob, ' '], 'bob': ["SENDING: " + bob_message, "ENCRYPT: " + encrypted_bob,"<-------------SENT", ' ']}
+        if 'bob_message' in parsed_form_data:
+            bob_message = parsed_form_data['bob_message'][0]
+            encrypted_bob = encrypt(bob_message,key)
+            return {'alice': [' ', ' ', "RECIEVED: " + encrypted_bob, "DECRYPT: " + decrypt(encrypted_bob, key)], 'public': ["KEY: " + key, ' ', "PUBLIC: " + encrypted_bob, ' '], 'bob': ["SENDING: " + bob_message, "ENCRYPT: " + encrypted_bob, "<-------------SENT", ' ']}
+        else:
+            return "Can not send from Bob with an empty Bob Message field."
     return "ERROR"
 

@@ -14,7 +14,7 @@ $(document).ready(function() {
             })
             $('#message_table').append('<tr><td>----------</td><td>----------</td><td>----------</td></tr>');
           },
-          error: function(e) { alert("Failed to get action.") }
+          error: function(e) { alert(e.responseText) }
         });
     }
 
@@ -27,8 +27,6 @@ $(document).ready(function() {
     });
 
     $("#bob_submit").click(function() {
-        console.log($("#message_form"))
-        console.log("hi")
         enc_message(1, $("#message_form").serialize());
     });
 
