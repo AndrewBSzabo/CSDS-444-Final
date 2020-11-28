@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+
+{% block name %}MD5 Checksum{% endblock %}
+{% block public %}<br />{% endblock %}
+{% block submit %}{{ url_for('enc4.encrypter') }}{% endblock %}
