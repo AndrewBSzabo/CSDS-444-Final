@@ -1,2 +1,5 @@
-<!-- to add for enc 2-->
-<h1>The second algorithm: DES</h1>
+{% extends 'base.html' %}
+
+{% block name %}DES{% endblock %}
+{% block public %}<p>Key</p><input type="input" name="key">{% endblock %}
+{% block submit %}{{ url_for('enc2.encrypter') }}{% endblock %}

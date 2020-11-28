@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
 
 {% block name %}Caeser Cipher{% endblock %}
-{% block public %}<br />{% endblock %}
+{% block public %}<p>Rotation Amount</p><input type="input" name="key">{% endblock %}
 {% block submit %}{{ url_for('enc0.encrypter') }}{% endblock %}
