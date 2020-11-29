@@ -32,7 +32,7 @@ def encrypter():
         if "alice_message" in parsed_form_data:
             alice_message = parsed_form_data["alice_message"][0]
             encrypted_alice = encrypt(alice_message)
-            return {"alice": [" ", " ", " ", " ", " ", " ", " ", "SENDING: " + alice_message, "ENCRYPT: " + encrypted_alice, "SENT---------->", " "], "public": ["p = " + p, "q = " + q, "e = " + e, " ", "CALCULATIONS:", "n = p * n = " + n, "totient_n = " + nt, " ", " ", "PUBLIC: " + encrypted_alice, " "], "bob": [" ", " ", " ", " ", "CALCULATIONS:", "b = " + d + ", (from: 1 = e * d mod totient_n)", " ", " ", " ", "RECIEVED: " + encrypted_alice, "DECRYPT: " + decrypt(encrypted_alice)]}
+            return {"alice": [" ", " ", " ", " ", " ", " ", " ", "SENDING: " + alice_message, "ENCRYPT: " + encrypted_alice, "SENT---------->", " "], "public": ["p = " + p, "q = " + q, "e = " + e, " ", "CALCULATIONS:", "n = p * q = " + n, "totient_n = " + nt, " ", " ", "PUBLIC: " + encrypted_alice, " "], "bob": [" ", " ", " ", " ", "CALCULATIONS:", "d = " + d + ", (from: 1 = e * d mod totient_n)", " ", " ", " ", "RECIEVED: " + encrypted_alice, "DECRYPT: " + decrypt(encrypted_alice)]}
         else:
             return "Can not send from Alice with an empty Alice Message field."
     # bob submit
@@ -40,7 +40,7 @@ def encrypter():
         if "bob_message" in parsed_form_data:
             bob_message = parsed_form_data["bob_message"][0]
             encrypted_bob = encrypt(bob_message)
-            return {"alice": [" ", " ", " ", " ", "CALCULATIONS:", "b = " + d + ", (from: 1 = e * d mod totient_n)", " ", " ", " ", "RECIEVED: " + encrypted_bob, "DECRYPT: " + decrypt(encrypted_bob)], "public": ["p = " + p, "q = " + q, "e = " + e, " ", "CALCULATIONS:", "n = p * n = " + n, "totient_n = " + nt, " ", " ", "PUBLIC: " + encrypted_bob, " "], "bob": [" ", " ", " ", " ", " ", " ", " ", "SENDING: " + bob_message, "ENCRYPT: " + encrypted_bob, "<-------------SENT", " "]}
+            return {"alice": [" ", " ", " ", " ", "CALCULATIONS:", "d = " + d + ", (from: 1 = e * d mod totient_n)", " ", " ", " ", "RECIEVED: " + encrypted_bob, "DECRYPT: " + decrypt(encrypted_bob)], "public": ["p = " + p, "q = " + q, "e = " + e, " ", "CALCULATIONS:", "n = p * q = " + n, "totient_n = " + nt, " ", " ", "PUBLIC: " + encrypted_bob, " "], "bob": [" ", " ", " ", " ", " ", " ", " ", "SENDING: " + bob_message, "ENCRYPT: " + encrypted_bob, "<-------------SENT", " "]}
         else:
             return "Can not send from Bob with an empty Bob Message field."
     return "ERROR"
