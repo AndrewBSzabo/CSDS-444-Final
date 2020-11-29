@@ -1,16 +1,16 @@
 p = 503
 q = 521
 n = p * q
-nt = 130520
+nt = 261040
 e = 3
-d = 43507
+d = 174027
 
 def getConsts():
     return p, q, n, nt, e, d
 
 def encrypt(message):
     encrypted_message = ""
-    
+
     for m in message:
         # c = m ** e % n
         encrypted_message += str((ord(m) ** e) % n) + " "
