@@ -20,15 +20,18 @@ python3 -m venv venv
 
 pip install -e .
 
-4. Run the server:
+4. Run the server (mac):
 
 export FLASK_APP=comp_sec
 
 export FLASK_ENV=development
 
+flask run
 
-For Windows:
+4. Run the server (windows):
+
 set FLASK_APP=comp_sec
+
 set FLASK_ENV=development
 
 flask run
