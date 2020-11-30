@@ -20,7 +20,7 @@ def getConstsBob():
 
 def encrypt(message, _e, _n):
     encrypted_message = ""
-    
+
     for m in message:
         # c = m ** e % n
         encrypted_message += str((ord(m) ** _e) % _n) + " "
