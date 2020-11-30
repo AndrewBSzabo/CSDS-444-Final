@@ -36,7 +36,7 @@ def encrypter():
             alice_message = parsed_form_data["alice_message"][0]
             encrypted_alice = encrypt(alice_message, int(b_e), int(b_n))
             return {"alice": ["ALICE VARIABLES:", "a_p = " + a_p, "a_q = " + a_q, "a_n = a_p * a_q = " + a_n, "totient(a_n) = " + a_nt, "a_e = " + a_e, "a_d = " + a_d + " (from: 1 = a_e * a_d mod totient(a_n))", "SENDING: " + alice_message, "ENCRYPT (using c = m ^ b_e mod b_n): " + encrypted_alice, "SENT---------->", " "], 
-                    "public": [" ", " ", "PUBLIC INFO:", "a_n = " + a_n + ", b_n " + b_n, " ", "a_e = " + a_e + ", b_e = " + b_e, " ", " ", " ", "PUBLIC: " + encrypted_alice, " "], 
+                    "public": [" ", " ", "PUBLIC INFO:", "a_n = " + a_n + ", b_n = " + b_n, " ", "a_e = " + a_e + ", b_e = " + b_e, " ", " ", " ", "PUBLIC: " + encrypted_alice, " "], 
                     "bob": ["BOB VARIABLES:", "b_p = " + b_p, "b_q = " + b_q, "b_n = b_p * b_q = " + b_n, "totient(b_n) = " + b_nt, "b_e = " + b_e, "b_d = " + b_d + " (from: 1 = b_e * b_d mod totient(b_n)", " ", " ", "RECIEVED: " + encrypted_alice, "DECRYPT (using m = c ^ b_d mod b_n): " + decrypt(encrypted_alice, int(b_d), int(b_n))]
                     }
         else:
@@ -47,7 +47,7 @@ def encrypter():
             bob_message = parsed_form_data["bob_message"][0]
             encrypted_bob = encrypt(bob_message, int(a_e), int(a_n))
             return {"alice": ["ALICE VARIABLES:", "a_p = " + a_p, "a_q = " + a_q, "a_n = a_p * a_q = " + a_n, "totient(a_n) = " + a_nt, "a_e = " + a_e, "a_d = " + a_d + " (from: 1 = a_e * a_d mod totient(a_n))", " ", " ", "RECIEVED: " + encrypted_bob, "DECRYPT (using m = c ^ a_d mod a_n): " + decrypt(encrypted_bob, int(a_d), int(a_n))], 
-                    "public": [" ", " ", "PUBLIC INFO:", "a_n = " + a_n + ", b_n " + b_n, " ", "a_e = " + a_e + ", b_e = " + b_e, " ", " ", " ", "PUBLIC: " + encrypted_bob, " "], 
+                    "public": [" ", " ", "PUBLIC INFO:", "a_n = " + a_n + ", b_n = " + b_n, " ", "a_e = " + a_e + ", b_e = " + b_e, " ", " ", " ", "PUBLIC: " + encrypted_bob, " "], 
                     "bob": ["BOB VARIABLES:", "b_p = " + b_p, "b_q = " + b_q, "b_n = b_p * b_q = " + b_n, "totient(b_n) = " + b_nt, "b_e = " + b_e, "b_d = " + b_d + " (from: 1 = b_e * b_d mod totient(b_n))", "SENDING: " + bob_message, "ENCRYPT (using c = m ^ a_e mod a_n): " + encrypted_bob, "<-------------SENT", " "]
                     }
         else:
